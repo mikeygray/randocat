@@ -1,6 +1,9 @@
 import { Component } from 'react';
-import catloading from './img/catloading.gif';
+import { Button } from '@material-ui/core';
 import './App.css';
+
+import catloading from './img/catloading.gif';
+import caterror from './img/caterror.gif';
 
 export default class App extends Component {
   constructor(props) {
@@ -23,15 +26,21 @@ export default class App extends Component {
             className="App-logo"
             alt="hopefully a cat"
           />
-          <p>
-            <strong>Reload Page To Get A New Cat</strong>
-          </p>
+          <div className="App-tools">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.getNewCatUrl}>
+              New Cat Please!
+            </Button>
+          </div>
         </header>
       </div>
     );
   }
 
-  getNewCatUrl() {
+  getNewCatUrl = () => {
+    this.setState({ currentCat: catloading });
     fetch('https://api.thecatapi.com/v1/images/search', {
       method: 'GET',
       headers: {
@@ -42,7 +51,11 @@ export default class App extends Component {
     })
       .then((response) => response.json())
       .then((response) => {
-        this.setState({ currentCat: response[0].url });
+        if (response.length > 0) {
+          this.setState({ currentCat: response[0].url });
+        } else {
+          this.setState({ currentCat: caterror });
+        }
       });
-  }
+  };
 }
