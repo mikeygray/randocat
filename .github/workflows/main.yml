@@ -19,7 +19,9 @@ jobs:
 
       - name: setup-node
         uses: actions/setup-node@v2.4.0
-      
+        with:
+          node-version: '14'
+          
       - name: install-packages
         run: npm install
           
