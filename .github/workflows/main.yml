@@ -1,0 +1,38 @@
+name: hostinger-deploy
+
+on:
+  # Triggers the workflow on push events but only for the master branch
+  push:
+    branches: [master]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  checkout-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup-node
+        uses: actions/setup-node@v2.4.0
+      
+      - name: install-packages
+        run: npm install
+          
+      - name: build-page
+        run: npm run build
+      
+      - name: move-dir
+        run: cd build
+        
+      - name: sync-files
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          server: mikeygray.co.uk
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          server-dir: domains/mikeygray.co.uk/public_html/_cats/
