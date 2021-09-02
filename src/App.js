@@ -1,25 +1,48 @@
-import logo from './logo.svg';
+import { Component } from 'react';
+import catloading from './img/catloading.gif';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentCat: catloading,
+    };
+  }
 
-export default App;
+  componentDidMount() {
+    this.getNewCatUrl();
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img
+            src={this.state.currentCat}
+            className="App-logo"
+            alt="hopefully a cat"
+          />
+          <p>
+            <strong>Reload Page To Get A New Cat</strong>
+          </p>
+        </header>
+      </div>
+    );
+  }
+
+  getNewCatUrl() {
+    fetch('https://api.thecatapi.com/v1/images/search', {
+      method: 'GET',
+      headers: {
+        'x-api-key': process.env.REACT_APP_CAT_API_KEY,
+        'content-type': 'application/json',
+        accept: 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        this.setState({ currentCat: response[0].url });
+      });
+  }
+}
