@@ -27,9 +27,6 @@ jobs:
           
       - name: build-page
         run: npm run build
-      
-      - name: move-dir
-        run: cd build
         
       - name: sync-files
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
@@ -37,4 +34,5 @@ jobs:
           server: mikeygray.co.uk
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
+          local-dir: ./build/
           server-dir: domains/mikeygray.co.uk/public_html/_cats/
