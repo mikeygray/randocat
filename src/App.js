@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Button } from '@material-ui/core';
+import RandomCatButton from './components/RandomCatButton';
 import './App.css';
 
 import catloading from './img/catloading.gif';
