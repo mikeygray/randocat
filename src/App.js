@@ -34,8 +34,11 @@ export default class App extends Component {
             <div className="App-spacer">
               <CatEgorySelector
                 onCatEgoryChange={(value) => {
-                  this.setState({ categoryId: value }, () =>
-                    this.getNewCatUrl()
+                  this.setState(
+                    (state) => {
+                      return { categoryId: value };
+                    },
+                    () => this.getNewCatUrl()
                   );
                 }}
                 catEgorySelected={this.state.categoryId}></CatEgorySelector>
@@ -57,7 +60,9 @@ export default class App extends Component {
   }
 
   getNewCatUrl = () => {
-    this.setState({ currentCatUrl: catloading });
+    this.setState((state) => {
+      return { currentCatUrl: catloading };
+    });
     var fetchUrl = 'https://api.thecatapi.com/v1/images/search';
     if (this.state.categoryId > 0)
       fetchUrl += '?category_ids=' + this.state.categoryId;
@@ -71,11 +76,15 @@ export default class App extends Component {
       },
     })
       .then((response) => response.json())
-      .then((response) => {
-        if (response.length > 0) {
-          this.setState({ currentCatUrl: response[0].url });
+      .then((randomCat) => {
+        if (randomCat.length > 0) {
+          this.setState((state) => {
+            return { currentCatUrl: randomCat[0].url };
+          });
         } else {
-          this.setState({ currentCatUrl: caterror });
+          this.setState((state) => {
+            return { currentCatUrl: caterror };
+          });
         }
       });
   };

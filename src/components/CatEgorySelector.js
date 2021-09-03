@@ -31,8 +31,10 @@ export default class CatEgorySelector extends Component {
       },
     })
       .then((response) => response.json())
-      .then((response) => {
-        this.setState({ catEgories: response });
+      .then((categoryArray) => {
+        this.setState((state) => {
+          return { catEgories: categoryArray };
+        });
       });
   }
 
