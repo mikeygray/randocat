@@ -11,7 +11,9 @@ on:
 jobs:
   checkout-deploy:
     runs-on: ubuntu-latest
-
+    env:
+      REACT_APP_CAT_API_KEY: ${{ secrets.CAT_API_KEY }}
+    
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
       - name: checkout
