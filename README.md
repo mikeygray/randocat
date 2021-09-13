@@ -10,8 +10,8 @@ an excuse to refresh my [ReactJS](https://reactjs.org/) capabilities. Hosted at
 The usual:
 
 ```bash
-git clone https://github.com/mikeygray/cats.git
-cd cats
+git clone https://github.com/mikeygray/randocat.git
+cd randocat
 yarn install
 yarn start
 ```
